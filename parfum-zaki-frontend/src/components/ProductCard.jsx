@@ -44,10 +44,22 @@ export default function ProductCard({ product }) {
 
         {/* Badges overlay */}
         <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
-          {product.isBestSeller && (
+          {(product.badge === 'best_seller' || product.isBestSeller) && (
             <span className="inline-flex items-center gap-1 bg-[#111111]/90 backdrop-blur-xs text-[#E7DAC7] text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm shadow-md">
               <Sparkles size={11} className="text-[#C5A880]" />
               Best Seller
+            </span>
+          )}
+          {product.badge === 'new_arrival' && (
+            <span className="inline-flex items-center gap-1 bg-emerald-950/90 backdrop-blur-xs text-emerald-100 text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm shadow-md border border-emerald-500/30">
+              <Sparkles size={11} className="text-emerald-400" />
+              Nouveauté
+            </span>
+          )}
+          {product.badge === 'featured' && (
+            <span className="inline-flex items-center gap-1 bg-[#A38458]/90 backdrop-blur-xs text-white text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm shadow-md">
+              <Sparkles size={11} className="text-amber-200" />
+              Coup de Cœur
             </span>
           )}
         </div>

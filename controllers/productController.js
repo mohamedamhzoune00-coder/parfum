@@ -126,7 +126,16 @@ const getAdminProducts = async (req, res) => {
 // @access  Private (Admin)
 const createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    const data = { ...req.body };
+    if (data.badge === 'best_seller') {
+      data.isBestSeller = true;
+    } else if (data.isBestSeller) {
+      data.badge = 'best_seller';
+    } else if (!data.badge) {
+      data.badge = 'none';
+    }
+
+    const product = await Product.create(data);
     const populated = await product.populate('category', 'name slug');
 
     res.status(201).json({
@@ -148,7 +157,16 @@ const createProduct = async (req, res) => {
 // @access  Private (Admin)
 const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const data = { ...req.body };
+    if (data.badge === 'best_seller') {
+      data.isBestSeller = true;
+    } else if (data.isBestSeller) {
+      data.badge = 'best_seller';
+    } else if (data.badge && data.badge !== 'best_seller') {
+      data.isBestSeller = false;
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,
     }).populate('category', 'name slug');

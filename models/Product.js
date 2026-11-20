@@ -65,6 +65,11 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    badge: {
+      type: String,
+      enum: ['none', 'best_seller', 'new_arrival', 'featured'],
+      default: 'none',
+    },
   },
   {
     timestamps: true,

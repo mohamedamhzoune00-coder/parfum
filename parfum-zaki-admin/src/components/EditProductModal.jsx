@@ -44,6 +44,7 @@ export default function EditProductModal({ isOpen, onClose, product, onProductUp
       category: catId,
       description: product.description || '',
       imagesText: Array.isArray(product.images) ? product.images.join('\n') : '',
+      badge: product.badge || (product.isBestSeller ? 'best_seller' : 'none'),
       isBestSeller: Boolean(product.isBestSeller),
       isActive: product.isActive !== undefined ? Boolean(product.isActive) : true,
     });
@@ -141,7 +142,8 @@ export default function EditProductModal({ isOpen, onClose, product, onProductUp
         category: formData.category,
         description: formData.description.trim(),
         images: imagesList.length > 0 ? imagesList : product.images || [],
-        isBestSeller: formData.isBestSeller,
+        badge: formData.badge,
+        isBestSeller: formData.badge === 'best_seller',
         isActive: formData.isActive,
         variants: variants.map((v) => ({
           ml: Number(v.ml),
@@ -276,32 +278,37 @@ export default function EditProductModal({ isOpen, onClose, product, onProductUp
                 </select>
               </div>
 
-              <div className="flex items-center gap-2 pt-5">
-                <input
-                  type="checkbox"
-                  id="isBestSeller"
-                  name="isBestSeller"
-                  checked={formData.isBestSeller}
-                  onChange={handleChange}
-                  className="w-4 h-4 rounded text-[#C5A880] focus:ring-[#C5A880] cursor-pointer"
-                />
-                <label htmlFor="isBestSeller" className="text-xs font-semibold text-[#111111] cursor-pointer">
-                  Mettre en "Best Seller" ⭐
-                </label>
-              </div>
+              <div className="sm:col-span-2 flex items-center gap-4 pt-2">
+                <div className="flex-1">
+                  <label className="block text-[10px] uppercase tracking-wider font-semibold text-[#888888] mb-1">
+                    Badge Promotionnel
+                  </label>
+                  <select
+                    name="badge"
+                    value={formData.badge}
+                    onChange={handleChange}
+                    className="w-full bg-[#F9F6F0] text-xs text-[#111111] px-3 py-2 rounded-xl border border-transparent focus:border-[#C5A880] focus:bg-white focus:outline-hidden transition-all cursor-pointer"
+                  >
+                    <option value="none">Aucun (Standard)</option>
+                    <option value="best_seller">Best Seller ⭐</option>
+                    <option value="new_arrival">Nouveauté ✨</option>
+                    <option value="featured">Coup de Cœur 💎</option>
+                  </select>
+                </div>
 
-              <div className="flex items-center gap-2 pt-5">
-                <input
-                  type="checkbox"
-                  id="isActive"
-                  name="isActive"
-                  checked={formData.isActive}
-                  onChange={handleChange}
-                  className="w-4 h-4 rounded text-[#C5A880] focus:ring-[#C5A880] cursor-pointer"
-                />
-                <label htmlFor="isActive" className="text-xs font-semibold text-[#111111] cursor-pointer">
-                  Produit Actif (Visible)
-                </label>
+                <div className="flex items-center gap-2 pt-4">
+                  <input
+                    type="checkbox"
+                    id="isActive"
+                    name="isActive"
+                    checked={formData.isActive}
+                    onChange={handleChange}
+                    className="w-4 h-4 rounded text-[#C5A880] focus:ring-[#C5A880] cursor-pointer"
+                  />
+                  <label htmlFor="isActive" className="text-xs font-semibold text-[#111111] cursor-pointer">
+                    Produit Actif
+                  </label>
+                </div>
               </div>
             </div>
 

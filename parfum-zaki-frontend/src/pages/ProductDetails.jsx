@@ -117,10 +117,22 @@ export default function ProductDetails() {
                 e.currentTarget.src = 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80';
               }}
             />
-            {product.isBestSeller && (
+            {(product.badge === 'best_seller' || product.isBestSeller) && (
               <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 bg-[#111111]/90 backdrop-blur-xs text-[#E7DAC7] text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-sm shadow-md">
                 <Sparkles size={13} className="text-[#C5A880]" />
                 Best Seller
+              </span>
+            )}
+            {product.badge === 'new_arrival' && (
+              <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 bg-emerald-950/90 backdrop-blur-xs text-emerald-100 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-sm shadow-md border border-emerald-500/30">
+                <Sparkles size={13} className="text-emerald-400" />
+                Nouveauté
+              </span>
+            )}
+            {product.badge === 'featured' && (
+              <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 bg-[#A38458]/90 backdrop-blur-xs text-white text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-sm shadow-md">
+                <Sparkles size={13} className="text-amber-200" />
+                Coup de Cœur
               </span>
             )}
           </div>

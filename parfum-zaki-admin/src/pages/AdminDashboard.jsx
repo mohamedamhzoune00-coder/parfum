@@ -4,6 +4,7 @@ import { getOrders, updateOrderStatus, getOrderStats } from '../api/orders';
 import { getAdminProducts, deleteProduct } from '../api/products';
 import Loader from '../components/Loader';
 import EditProductModal from '../components/EditProductModal';
+import AddProductModal from '../components/AddProductModal';
 import {
   Package,
   TrendingUp,
@@ -12,7 +13,8 @@ import {
   LogOut,
   RefreshCw,
   Trash2,
-  Pencil
+  Pencil,
+  Plus
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -26,6 +28,7 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState('');
   const [message, setMessage] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Check authentication
   useEffect(() => {
@@ -97,6 +100,12 @@ export default function AdminDashboard() {
     );
     setMessage(`Le parfum "${updatedProduct.name}" a été modifié avec succès !`);
     setTimeout(() => setMessage(null), 3000);
+  };
+
+  const handleProductAdded = (newProduct) => {
+    setProducts((prev) => [newProduct, ...prev]);
+    setMessage(`Le parfum "${newProduct.name}" a été ajouté au catalogue avec succès !`);
+    setTimeout(() => setMessage(null), 4000);
   };
 
   const handleLogout = () => {
@@ -360,13 +369,23 @@ export default function AdminDashboard() {
       ) : (
         /* ================= TAB 2: PRODUCTS ================= */
         <div className="bg-white rounded-2xl border border-[#F4EFEA] overflow-hidden shadow-xs">
-          <div className="p-4 border-b border-[#F4EFEA] flex justify-between items-center bg-[#F9F6F0]">
-            <span className="text-xs uppercase tracking-wider font-bold text-[#111111]">
-              Liste des Parfums Actifs
-            </span>
-            <span className="text-[11px] text-[#888888]">
-              {products.length} parfums enregistrés
-            </span>
+          <div className="p-4 border-b border-[#F4EFEA] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F9F6F0]">
+            <div>
+              <span className="text-xs uppercase tracking-wider font-bold text-[#111111] block">
+                Liste des Parfums Actifs
+              </span>
+              <span className="text-[11px] text-[#888888]">
+                {products.length} parfums enregistrés dans le catalogue
+              </span>
+            </div>
+
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 bg-[#111111] hover:bg-[#C5A880] text-[#FFFDF9] text-xs uppercase tracking-wider font-semibold px-4 py-2.5 rounded-full shadow-md transition-all cursor-pointer hover:shadow-lg shrink-0"
+            >
+              <Plus size={15} />
+              <span>Ajouter un parfum</span>
+            </button>
           </div>
 
           <div className="overflow-x-auto">
@@ -414,9 +433,17 @@ export default function AdminDashboard() {
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      {p.isBestSeller ? (
-                        <span className="bg-[#111111] text-[#E7DAC7] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-                          Best Seller
+                      {p.badge === 'best_seller' || p.isBestSeller ? (
+                        <span className="bg-[#111111] text-[#E7DAC7] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-2xs">
+                          Best Seller ⭐
+                        </span>
+                      ) : p.badge === 'new_arrival' ? (
+                        <span className="bg-emerald-900 text-emerald-100 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-2xs">
+                          Nouveau ✨
+                        </span>
+                      ) : p.badge === 'featured' ? (
+                        <span className="bg-[#A38458] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-2xs">
+                          Coup de Cœur 💎
                         </span>
                       ) : (
                         <span className="text-[10px] text-[#888888]">Standard</span>
@@ -447,6 +474,15 @@ export default function AdminDashboard() {
             </table>
           </div>
         </div>
+      )}
+
+      {/* Modal d'Ajout de Produit */}
+      {isAddModalOpen && (
+        <AddProductModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          onProductAdded={handleProductAdded}
+        />
       )}
 
       {/* Modal de Modification de Produit */}
