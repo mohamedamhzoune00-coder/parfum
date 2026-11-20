@@ -56,3 +56,16 @@ h1, h2, h3, .font-playfair {
   background: #C5A880;
   border-radius: 3px;
 }
+
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: scale(1.02) translateY(0);
+  }
+  50% {
+    transform: scale(1.06) translateY(-10px);
+  }
+}
+
+.animate-luxury-float {
+  animation: luxuryFloat 20s ease-in-out infinite;
+}
