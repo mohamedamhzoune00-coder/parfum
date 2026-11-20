@@ -20,18 +20,32 @@ export default function ProductCard({ product }) {
   return (
     <div className="group bg-white rounded-xl border border-[#F4EFEA] overflow-hidden flex flex-col hover:border-[#C5A880]/50 hover:shadow-xl hover:shadow-[#C5A880]/10 transition-all duration-300">
       {/* Image container */}
-      <Link to={`/product/${product._id}`} className="relative aspect-[4/5] bg-[#F9F6F0] overflow-hidden block">
+      <Link
+        to={`/product/${product._id}`}
+        className="relative aspect-[4/5] bg-gradient-to-b from-[#FAF8F5] to-[#F3EEE7] overflow-hidden flex items-center justify-center p-4 block"
+      >
+        {/* Ambient subtle glow based on the perfume image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 scale-125 pointer-events-none transition-opacity duration-500 group-hover:opacity-30"
+          style={{ backgroundImage: `url(${imageSrc})` }}
+        />
+
+        {/* Real Perfume Bottle Image (object-contain, centered, uncropped) */}
         <img
           src={imageSrc}
           alt={product.name}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="relative z-10 w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-700 ease-out drop-shadow-sm"
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80';
+          }}
         />
 
         {/* Badges overlay */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+        <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
           {product.isBestSeller && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-[#E7DAC7] text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm shadow-md">
+            <span className="inline-flex items-center gap-1 bg-[#111111]/90 backdrop-blur-xs text-[#E7DAC7] text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm shadow-md">
               <Sparkles size={11} className="text-[#C5A880]" />
               Best Seller
             </span>
@@ -40,11 +54,11 @@ export default function ProductCard({ product }) {
 
         {/* Available sizes pills */}
         {product.variants && product.variants.length > 0 && (
-          <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
+          <div className="absolute bottom-3 left-3 right-3 z-20 flex flex-wrap gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
             {product.variants.map((variant, index) => (
               <span
                 key={index}
-                className="bg-white/90 backdrop-blur-xs text-[#111111] text-[9px] font-medium tracking-wider uppercase px-2 py-0.5 rounded shadow-xs"
+                className="bg-white/90 backdrop-blur-xs text-[#111111] text-[9px] font-medium tracking-wider uppercase px-2 py-0.5 rounded shadow-xs border border-white/40"
               >
                 {variant.ml} ML
               </span>

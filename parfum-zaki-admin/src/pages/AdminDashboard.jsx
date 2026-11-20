@@ -384,14 +384,14 @@ export default function AdminDashboard() {
                 {products.map((p) => (
                   <tr key={p._id} className="hover:bg-[#F9F6F0]/60 transition-colors">
                     <td className="py-3 px-4">
-                      <div className="w-12 h-14 bg-[#F9F6F0] rounded-lg overflow-hidden">
+                      <div className="w-12 h-14 bg-[#F9F6F0] rounded-lg overflow-hidden flex items-center justify-center p-1">
                         <img
                           src={
                             p.images?.[0] ||
                             'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=150&q=80'
                           }
                           alt={p.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain object-center"
                         />
                       </div>
                     </td>

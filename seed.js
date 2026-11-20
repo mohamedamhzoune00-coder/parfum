@@ -49,7 +49,7 @@ const seedDB = async () => {
         category: catHomme._id,
         description:
           'عطر رجالي فاخر من شانيل، مزيج ديال النعناع والجريب فروت مع خشب الأرز. ريحة أنيقة وعصرية كتناسب كل الأوقات.',
-        images: ['https://placehold.co/600x600/1a1a2e/ffffff?text=Bleu+de+Chanel'],
+        images: ['/products/bleu-de-chanel.jpg'],
         variants: [
           { ml: 50, price: 850, stock: 15 },
           { ml: 100, price: 1200, stock: 10 },
@@ -64,7 +64,7 @@ const seedDB = async () => {
         category: catFemme._id,
         description:
           'عطر نسائي رومانسي من ديور، فيه نوتات ديال الورد والفاوانيا مع المسك الأبيض. مثالي للاستعمال اليومي.',
-        images: ['https://placehold.co/600x600/e8d5b7/333333?text=Miss+Dior'],
+        images: ['/products/miss-dior.jpg'],
         variants: [
           { ml: 30, price: 650, stock: 20 },
           { ml: 50, price: 950, stock: 12 },
@@ -79,7 +79,7 @@ const seedDB = async () => {
         category: catUnisexe._id,
         description:
           'عطر يونيسكس فاخر من توم فورد، مبني على خشب العود مع الفانيليا والعنبر. ريحة دافئة وفخمة.',
-        images: ['https://placehold.co/600x600/2d2d2d/gold?text=Oud+Wood'],
+        images: ['/products/oud-wood.jpg'],
         variants: [
           { ml: 50, price: 2200, stock: 7 },
           { ml: 100, price: 3200, stock: 4 },
@@ -93,7 +93,7 @@ const seedDB = async () => {
         category: catHomme._id,
         description:
           'النسخة الأقوى من سوفاج ديور. تركيز عالي، فيه اللافندر والقرفة مع خشب الصندل. كيدوم طول النهار.',
-        images: ['https://placehold.co/600x600/0d1b2a/ffffff?text=Sauvage+Elixir'],
+        images: ['/products/sauvage-elixir.jpg'],
         variants: [
           { ml: 60, price: 1800, stock: 10 },
           { ml: 100, price: 2400, stock: 6 },
@@ -107,7 +107,7 @@ const seedDB = async () => {
         category: catPrivee._id,
         description:
           'عطر استثنائي، من أشهر العطور فالعالم. مزيج ديال الزعفران والعنبر مع خشب الأرز. ريحة فريدة ومميزة.',
-        images: ['https://placehold.co/600x600/8b0000/gold?text=Baccarat+Rouge'],
+        images: ['/products/baccarat-rouge-540.jpg'],
         variants: [
           { ml: 35, price: 2800, stock: 5 },
           { ml: 70, price: 4500, stock: 3 },

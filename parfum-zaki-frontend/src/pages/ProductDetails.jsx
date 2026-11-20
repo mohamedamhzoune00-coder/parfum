@@ -100,14 +100,25 @@ export default function ProductDetails() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Product Visuals */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-[4/5] bg-[#F9F6F0] rounded-2xl overflow-hidden border border-[#F4EFEA] shadow-xs">
+          <div className="relative aspect-[4/5] bg-gradient-to-b from-[#FAF8F5] to-[#F3EEE7] rounded-2xl overflow-hidden border border-[#F4EFEA] shadow-md flex items-center justify-center p-6 sm:p-8">
+            {/* Ambient subtle glow based on the perfume image */}
+            <div
+              className="absolute inset-0 bg-cover bg-center blur-3xl opacity-25 scale-125 pointer-events-none"
+              style={{ backgroundImage: `url(${imageSrc})` }}
+            />
+
+            {/* Real Perfume Bottle Image */}
             <img
               src={imageSrc}
               alt={product.name}
-              className="w-full h-full object-cover object-center"
+              className="relative z-10 w-full h-full object-contain object-center drop-shadow-md hover:scale-105 transition-transform duration-700 ease-out"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80';
+              }}
             />
             {product.isBestSeller && (
-              <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-[#111111] text-[#E7DAC7] text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-sm shadow-md">
+              <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 bg-[#111111]/90 backdrop-blur-xs text-[#E7DAC7] text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-sm shadow-md">
                 <Sparkles size={13} className="text-[#C5A880]" />
                 Best Seller
               </span>
