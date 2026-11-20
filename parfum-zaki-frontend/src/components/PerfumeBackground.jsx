@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 /**
  * PerfumeBackground
  * Luxury liquid gold fragrance waves with floating glowing aromatic particles.
- * Directly inspired by high-end perfume campaigns (Chanel, Dior, Tom Ford).
+ * Directly using the uploaded luxury perfume golden ribbons backdrop.
  */
 export default function PerfumeBackground({ className = '' }) {
   const canvasRef = useRef(null);
@@ -30,15 +30,15 @@ export default function PerfumeBackground({ className = '' }) {
 
     window.addEventListener('resize', handleResize);
 
-    // Golden scent dust / aromatic luminous particles
+    // Golden scent dust particles floating over the liquid gold waves
     let particles = [];
-    const count = width < 768 ? 24 : 45;
+    const count = width < 768 ? 20 : 38;
 
     const colors = [
-      'rgba(214, 180, 124, ', // Champagne Gold #D6B47C
-      'rgba(245, 230, 200, ', // Warm Glow Ivory
-      'rgba(201, 154, 139, ', // Rose Gold #C99A8B
-      'rgba(217, 164, 65, ',  // Amber Gold #D9A441
+      'rgba(214, 180, 124, ', // Champagne Gold
+      'rgba(255, 245, 225, ', // Warm Luminous Ivory
+      'rgba(201, 154, 139, ', // Rose Gold
+      'rgba(217, 164, 65, ',  // Amber Gold
       'rgba(255, 255, 255, ', // Pure Star Shimmer
     ];
 
@@ -48,12 +48,12 @@ export default function PerfumeBackground({ className = '' }) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          radius: Math.random() * 2.2 + 0.6,
-          baseAlpha: Math.random() * 0.55 + 0.2,
-          speedAlpha: Math.random() * 0.02 + 0.01,
+          radius: Math.random() * 2.4 + 0.8,
+          baseAlpha: Math.random() * 0.6 + 0.25,
+          speedAlpha: Math.random() * 0.025 + 0.01,
           phase: Math.random() * Math.PI * 2,
-          vx: (Math.random() - 0.25) * 0.35,
-          vy: -(Math.random() * 0.45 + 0.15), // Floating gently upward
+          vx: (Math.random() - 0.3) * 0.4,
+          vy: -(Math.random() * 0.5 + 0.2), // Floating upward
           color: colors[Math.floor(Math.random() * colors.length)],
         });
       }
@@ -61,7 +61,7 @@ export default function PerfumeBackground({ className = '' }) {
 
     initParticles();
 
-    // Mouse parallax factor for delicate interactive fragrance breeze
+    // Mouse parallax for interactive breeze
     let mouseX = width / 2;
     let mouseY = height / 2;
     let targetMouseX = width / 2;
@@ -95,7 +95,6 @@ export default function PerfumeBackground({ className = '' }) {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Smooth mouse easing
       mouseX += (targetMouseX - mouseX) * 0.04;
       mouseY += (targetMouseY - mouseY) * 0.04;
 
@@ -106,7 +105,6 @@ export default function PerfumeBackground({ className = '' }) {
           p.y += p.vy;
           p.phase += p.speedAlpha;
 
-          // Wrap around seamlessly
           if (p.y < -15) {
             p.y = height + 15;
             p.x = Math.random() * width;
@@ -115,23 +113,23 @@ export default function PerfumeBackground({ className = '' }) {
           if (p.x > width + 15) p.x = -15;
         }
 
-        const alpha = p.baseAlpha * (0.6 + 0.4 * Math.sin(p.phase));
+        const alpha = p.baseAlpha * (0.65 + 0.35 * Math.sin(p.phase));
 
         // Soft halo glow
-        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 2.8);
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
         glow.addColorStop(0, `${p.color}${alpha})`);
-        glow.addColorStop(0.4, `${p.color}${alpha * 0.4})`);
+        glow.addColorStop(0.45, `${p.color}${alpha * 0.4})`);
         glow.addColorStop(1, `${p.color}0)`);
 
         ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 2.8, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
         ctx.fill();
 
         // Shimmering core
-        ctx.fillStyle = `${p.color}${Math.min(1, alpha * 1.6)})`;
+        ctx.fillStyle = `${p.color}${Math.min(1, alpha * 1.8)})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 0.7, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.radius * 0.75, 0, Math.PI * 2);
         ctx.fill();
       });
 
@@ -152,31 +150,25 @@ export default function PerfumeBackground({ className = '' }) {
 
   return (
     <div
-      className={`absolute inset-0 overflow-hidden pointer-events-none select-none -z-10 ${className}`}
+      className={`absolute inset-0 overflow-hidden pointer-events-none select-none z-0 ${className}`}
       aria-hidden="true"
     >
-      {/* 1. Exact Luxury Liquid Gold Fragrance Wave Image with Slow Majestic Breathing Motion */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <img
-          src="/luxury-perfume-bg.jpg"
-          alt=""
-          className="w-full h-full object-cover object-center lg:object-[center_25%] animate-luxury-float opacity-80 filter saturate-[1.08] contrast-[1.02]"
-          loading="eager"
-        />
-      </div>
+      {/* 1. The High-Resolution Liquid Gold Fragrance Wave Image */}
+      <img
+        src="/luxury-perfume-bg.jpg"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover object-center lg:object-[center_20%] opacity-90 filter saturate-[1.1] contrast-[1.03] animate-luxury-float"
+        loading="eager"
+      />
 
-      {/* 2. Soft Ambient Vignette & Warm Ivory Overlays to ensure text & buttons are perfectly readable */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9]/65 via-[#FFFDF9]/20 to-[#FFFDF9]/90" />
-      <div className="absolute inset-0 bg-radial-[at_50%_35%] from-transparent via-[#FFFDF9]/30 to-[#FFFDF9]/80" />
+      {/* 2. Delicate Translucent Light Blend (Subtle enough so the gold ribbons shine brightly, but text stays crisp) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9]/40 via-transparent to-[#FFFDF9]/75" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,253,249,0.45)_0%,transparent_70%)]" />
 
-      {/* 3. Subtle Warm Golden Ambient Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#D6B47C]/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#E8D6BD]/20 rounded-full blur-[140px] pointer-events-none" />
-
-      {/* 4. Canvas for Real-time Floating Golden Stardust & Aromatic Particles */}
+      {/* 3. Real-time Animated Golden Shimmer Particles */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full block"
+        className="absolute inset-0 w-full h-full block z-10"
         style={{ width: '100%', height: '100%' }}
       />
     </div>
